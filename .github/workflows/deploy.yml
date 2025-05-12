@@ -53,3 +53,4 @@ jobs:
             - index.php
             - .git/**
             - .github/**
+            - lost+found
