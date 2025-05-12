@@ -1,0 +1,53 @@
+name: CI4 Dual-Directory FTP Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'    # Matches CodeIgniter 4.6.1 requirements
+
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout built code
+        uses: actions/checkout@v4
+
+      # Deploy only the `public/` folder to `public_html/`
+      - name: Deploy public folder
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT || 21 }}
+          local-dir: 'public'           # Your web root content
+          server-dir: '/htdocs/'   # Shared hosting web root
+
+      # Deploy remaining project files to `_project_`
+      - name: Deploy application code
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT || 21 }}
+          local-dir: '/'        # Your CI4 app code directory
+          server-dir: '/_project_/'      # Server-side folder for app logic
+          exclude: |
+            - public/**
+            - index.php
