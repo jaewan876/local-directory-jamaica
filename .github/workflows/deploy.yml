@@ -46,7 +46,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT || 21 }}
-          local-dir: '/'        # Your CI4 app code directory
+          # local-dir: '/'        # Your CI4 app code directory
           server-dir: 'htdocs/_project_/'      # Server-side folder for app logic
           exclude: |
             - public/**
