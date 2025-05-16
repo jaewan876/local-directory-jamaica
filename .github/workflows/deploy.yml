@@ -48,7 +48,7 @@ jobs:
           port: ${{ secrets.FTP_PORT != '' && secrets.FTP_PORT || 21 }}
           # local-dir:        # Your CI4 app code directory
           server-dir: jamaica.wuaze.com/htdocs/_project_/     # Server-side folder for app logic
-          exclude:
+          exclude: |
             - public/**
             - index.php
             - .git/**
