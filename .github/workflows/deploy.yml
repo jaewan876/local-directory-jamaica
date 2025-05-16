@@ -35,8 +35,8 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT != '' && secrets.FTP_PORT || 21 }}
-          local-dir: 'public/'           # Your web root content
-          server-dir: ' jamaica.wuaze.com/htdocs/'   # Shared hosting web root
+          local-dir: /public           # Your web root content
+          server-dir: jamaica.wuaze.com/htdocs/   # Shared hosting web root
 
       # Deploy remaining project files to `_project_`
       - name: Deploy application code
@@ -46,9 +46,9 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT != '' && secrets.FTP_PORT || 21 }}
-          # local-dir: '/'        # Your CI4 app code directory
-          server-dir: ' jamaica.wuaze.com/htdocs/_project_/'      # Server-side folder for app logic
-          exclude: |
+          local-dir: /       # Your CI4 app code directory
+          server-dir: jamaica.wuaze.com/htdocs/_project_/     # Server-side folder for app logic
+          exclude:
             - public/**
             - index.php
             - .git/**
