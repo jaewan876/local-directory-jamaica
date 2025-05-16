@@ -1,4 +1,4 @@
-name: CI4 Dual-Directory FTP Deployment
+name: Local Directory FTP Deployment
 
 on:
   push:
@@ -46,7 +46,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT != '' && secrets.FTP_PORT || 21 }}
-          local-dir: local-directory       # Your CI4 app code directory
+          local-dir:        # Your CI4 app code directory
           server-dir: jamaica.wuaze.com/htdocs/_project_/     # Server-side folder for app logic
           exclude:
             - public/**
